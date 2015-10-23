@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 public class ChatView 
 {
-	public void showResonse(String wordsFromSomewhere)
+	public void showResponse(String wordsFromSomewhere)
 	{
 		JOptionPane.showMessageDialog(null, wordsFromSomewhere);
 	}
