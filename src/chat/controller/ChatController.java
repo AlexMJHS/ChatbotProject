@@ -35,6 +35,10 @@ public class ChatController
 			{
 				myDisplay.showResponse("wow, I had no idea you are interested in " + myBot.getContent());
 			}
+			else if(myBot.memeChecker(conversation))
+			{
+				myDisplay.showResponse("That meme is dank");
+			}
 			
 			conversation = myDisplay.grabAnswer(conversation);
 			

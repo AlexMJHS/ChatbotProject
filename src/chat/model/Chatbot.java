@@ -24,7 +24,7 @@ public class Chatbot
 		this.userName = userName;
 		this.memesList = new ArrayList<String>();
 		this.politicalTopicList = new ArrayList<String>();
-		this.content = "Guy Fieri";
+		this.content = "memes";
 		
 		buildMemesList();
 		buildPoliticalTopicsList();
@@ -112,7 +112,18 @@ public class Chatbot
 	 */
 	public boolean memeChecker(String currentInput)
 	{
-		return false;
+		boolean hasMeme = false;
+		
+		for(String currentMeme : memesList)
+		{
+			if(currentMeme.equalsIgnoreCase(currentInput))
+			{
+				hasMeme = true;
+			}
+		}
+		
+		return hasMeme;
+		
 	}
 	
 	/**
