@@ -39,6 +39,10 @@ public class ChatController
 			{
 				myDisplay.showResponse("That meme is dank");
 			}
+			else if(myBot.politicalTopicChecker(conversation))
+			{
+				myDisplay.showResponse("You know politics!");
+			}
 			
 			conversation = myDisplay.grabAnswer(conversation);
 			

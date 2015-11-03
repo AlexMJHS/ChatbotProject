@@ -47,6 +47,9 @@ public class Chatbot
 	
 	private void buildPoliticalTopicsList()
 	{
+		this.politicalTopicList.add("global warming");
+		this.politicalTopicList.add("gun control");
+		this.politicalTopicList.add("president");
 		
 	}
 	
@@ -101,9 +104,17 @@ public class Chatbot
 	 */
 	public boolean politicalTopicChecker(String currentInput)
 	{
-		return false;
+		boolean hasPolitics = false;
+		
+		for(String currentPolitics : politicalTopicList)
+		{
+			if(currentPolitics.equalsIgnoreCase(currentInput))
+			{
+				hasPolitics = true;
+			}
+		}
+		return hasPolitics;
 	}
-	
 	
 	/**
 	 * Checks to see that the supplied String value is in the current memesList variable.
@@ -124,6 +135,61 @@ public class Chatbot
 		
 		return hasMeme;
 		
+	}
+	
+	public String processConversation(String currentInput)
+	{
+		String nextConversation = "";
+		int randomTopic = (int) (Math.random() * 5); //Generates a random number between 0 and 4.
+		
+		switch (randomTopic)
+		{
+			case 0:
+				if(memeChecker(currentInput))
+				{
+					nextConversation = "That is a very popular meme this year.What else are you"
+							+ " wanting to talk about?";
+				}
+				break;
+			case 1:
+				if(politicalTopicChecker(currentInput))
+				{
+					nextConversation = "some words and a question";
+				}
+				break;
+			case 2:
+			{
+				if(contentChecker(currentInput))
+				{
+					nextConversation = "some words and a question";
+				}
+				
+			}
+				break;
+			case 3:
+			{
+				if(currentInput.length() > 20)
+				{
+					nextConversation = "some words and a question";
+				}
+				
+			}
+				break;
+			case 4:
+			{
+				if(contentChecker(currentInput))
+				{
+					nextConversation = "some words and a question";
+				}
+				
+			}
+				break;
+			default:
+				nextConversation = "The universe has ended sad panda";
+				break;
+		}		
+		
+		return nextConversation;
 	}
 	
 	/**
