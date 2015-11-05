@@ -31,26 +31,13 @@ public class ChatController
 		String conversation = myDisplay.grabAnswer("What would you like to talk about today?");
 		while(myBot.lengthChecker(conversation))
 		{
-			if(myBot.contentChecker(conversation))
-			{
-				myDisplay.showResponse("wow, I had no idea you are interested in " + myBot.getContent());
-			}
-			else if(myBot.memeChecker(conversation))
-			{
-				myDisplay.showResponse("That meme is dank");
-			}
-			else if(myBot.politicalTopicChecker(conversation))
-			{
-				myDisplay.showResponse("You know politics!");
-			}
-			
-			conversation = myDisplay.grabAnswer(conversation);
+			conversation = myDisplay.grabAnswer(myBot.processConversation(conversation));
 			
 		}
 	}
 	
 	private void shutDown()
 	{
-		
+		myDisplay.showResponse("Goodbye" + myBot.getUserName() + "it has been a pleasure talking with you.");
 	}
 }

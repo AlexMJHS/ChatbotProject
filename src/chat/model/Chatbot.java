@@ -139,7 +139,7 @@ public class Chatbot
 	
 	public String processConversation(String currentInput)
 	{
-		String nextConversation = "";
+		String nextConversation = " Oh, what else would you like to talk about?";
 		int randomTopic = (int) (Math.random() * 5); //Generates a random number between 0 and 4.
 		
 		switch (randomTopic)
@@ -147,21 +147,21 @@ public class Chatbot
 			case 0:
 				if(memeChecker(currentInput))
 				{
-					nextConversation = "That is a very popular meme this year.What else are you"
+					nextConversation = "That is a very popular meme this year. What else are you"
 							+ " wanting to talk about?";
 				}
 				break;
 			case 1:
 				if(politicalTopicChecker(currentInput))
 				{
-					nextConversation = "some words and a question";
+					nextConversation = "That's so cool";
 				}
 				break;
 			case 2:
 			{
 				if(contentChecker(currentInput))
 				{
-					nextConversation = "some words and a question";
+					nextConversation = "Wow, interesting";
 				}
 				
 			}
@@ -170,7 +170,7 @@ public class Chatbot
 			{
 				if(currentInput.length() > 20)
 				{
-					nextConversation = "some words and a question";
+					nextConversation = "So cool";
 				}
 				
 			}
@@ -179,7 +179,7 @@ public class Chatbot
 			{
 				if(contentChecker(currentInput))
 				{
-					nextConversation = "some words and a question";
+					nextConversation = "That sounds pretty cool";
 				}
 				
 			}
