@@ -31,6 +31,7 @@ public class Chatbot
 		
 		buildMemesList();
 		buildPoliticalTopicsList();
+		buildKeyboardMashList();
 		
 	}
 	
@@ -50,11 +51,11 @@ public class Chatbot
 	
 	private void buildPoliticalTopicsList()
 	{
-		this.politicalTopicList.add("democrat");
-		this.politicalTopicList.add("republican");
-		this.politicalTopicList.add("liberal");
-		this.politicalTopicList.add("election");
-		this.politicalTopicList.add("conservative");
+		this.politicalTopicList.add("Democrat");
+		this.politicalTopicList.add("Republican");
+		this.politicalTopicList.add("Liberal");
+		this.politicalTopicList.add("Election");
+		this.politicalTopicList.add("Conservative");
 		this.politicalTopicList.add("Trump");
 		this.politicalTopicList.add("Clinton");
 		this.politicalTopicList.add("Biden");
@@ -62,20 +63,29 @@ public class Chatbot
 		this.politicalTopicList.add("Rubio");
 		this.politicalTopicList.add("Fiorina");
 		this.politicalTopicList.add("Sanders");
-		this.politicalTopicList.add("vote");
-		this.politicalTopicList.add("11/8/1016");
-		
+		this.politicalTopicList.add("Vote");
+		this.politicalTopicList.add("11/4/16");	
 	}
 	
-	private boolean KeyboardMashChecker(String currentInput)
+	private void buildKeyboardMashList()
+	{
+		this.keyboardMashList.add("sdf");
+		this.keyboardMashList.add("dfg");
+		this.keyboardMashList.add("cvb");
+		this.keyboardMashList.add(",./");
+	}
+	
+	public boolean keyboardMashChecker(String currentInput)
 	{
 		boolean mashTyping = false;
 		
-		if(currentInput.equals("sdf")|| currentInput.equals("dfg")|| currentInput.equals("cvb")|| currentInput.equals(",./"))
-		{
-			mashTyping = true;
+		for(String currentMash: keyboardMashList)
+		{	
+			if(currentInput.equals("sdf")|| currentInput.equals("dfg")|| currentInput.equals("cvb")|| currentInput.equals(",./"))
+			{
+				mashTyping = true;
+			}
 		}
-		
 		return mashTyping;
 	}
 	
@@ -178,7 +188,7 @@ public class Chatbot
 	{
 		String nextConversation = " Oh, what else would you like to talk about?";
 		int randomTopic = (int) (Math.random() * 5); //Generates a random number between 0 and 4.
-		if(keyboardmMashChecker(currentInput))
+		if(keyboardMashChecker(currentInput))
 		{
 			return "stop mashing the keyboard!";
 		}
