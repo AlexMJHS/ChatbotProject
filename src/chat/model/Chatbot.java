@@ -12,6 +12,7 @@ public class Chatbot
 {
 	private ArrayList<String> memesList;
 	private ArrayList<String> politicalTopicList;
+	private ArrayList<String> keyboardMashList;
 	private String userName;
 	private String content;
 	
@@ -24,7 +25,9 @@ public class Chatbot
 		this.userName = userName;
 		this.memesList = new ArrayList<String>();
 		this.politicalTopicList = new ArrayList<String>();
+		this.keyboardMashList = new ArrayList<String>();
 		this.content = "memes";
+	
 		
 		buildMemesList();
 		buildPoliticalTopicsList();
@@ -51,6 +54,18 @@ public class Chatbot
 		this.politicalTopicList.add("gun control");
 		this.politicalTopicList.add("president");
 		
+	}
+	
+	private boolean KeyboardMashChecker(String currentInput)
+	{
+		boolean mashTyping = false;
+		
+		if(currentInput.equals("sdf")|| currentInput.equals("dfg")|| currentInput.equals("cvb")|| currentInput.equals(",./"))
+		{
+			mashTyping = true;
+		}
+		
+		return mashTyping;
 	}
 	
 	/**
@@ -137,11 +152,25 @@ public class Chatbot
 		
 	}
 	
+	public boolean quitChecker(String currentInput)
+	{
+		boolean hasQuit = false;
+		
+		if(currentInput.equals("quit"))
+		{
+			hasQuit = true;
+		}
+		return hasQuit;
+	}
+	
 	public String processConversation(String currentInput)
 	{
 		String nextConversation = " Oh, what else would you like to talk about?";
 		int randomTopic = (int) (Math.random() * 5); //Generates a random number between 0 and 4.
-		
+		if(keyboardmMashChecker(currentInput))
+		{
+			return "stop mashing the keyboard!";
+		}
 		switch (randomTopic)
 		{
 			case 0:
@@ -191,6 +220,7 @@ public class Chatbot
 		
 		return nextConversation;
 	}
+	
 	
 	/**
 	 * Returns the username of this Chatbot instance.

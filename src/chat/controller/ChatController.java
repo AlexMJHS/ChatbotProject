@@ -31,13 +31,43 @@ public class ChatController
 		String conversation = myDisplay.grabAnswer("What would you like to talk about today?");
 		while(myBot.lengthChecker(conversation))
 		{
+			conversation = myBot.processConversation(conversation);
 			conversation = myDisplay.grabAnswer(myBot.processConversation(conversation));
 			
 		}
 	}
 	
+	public String userToChatbot(String conversation)
+	{
+		String response= "";
+		if(myBot.quitChecker(conversation))
+		{
+			shutDown();
+		}
+		
+		response = myBot.processConversation(conversation);
+		
+		return response;
+	}
+	
 	private void shutDown()
 	{
 		myDisplay.showResponse("Goodbye" + myBot.getUserName() + "it has been a pleasure talking with you.");
+		System.exit(0);
 	}
-}
+	
+	public Chatbot getChatbot()
+	{
+		return myBot;
+	}
+	
+	public ChatView getChatView()
+	{
+		return myDisplay;
+	}
+	
+	public ChatFrame getBaseFrame()
+	{
+		return baseFrame;
+	}
+}	
