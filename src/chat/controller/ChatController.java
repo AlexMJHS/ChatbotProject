@@ -2,7 +2,6 @@ package chat.controller;
 
 import chat.view.ChatView;
 import chat.model.Chatbot;
-import chat.view.ChatFrame;
 
 /**
  * 
@@ -13,14 +12,12 @@ public class ChatController
 {
 	private Chatbot myBot;
 	private ChatView myDisplay;
-	private ChatFrame baseFrame;
 	
 	public ChatController()
 	{
 		myDisplay = new ChatView();
 		String userName = myDisplay.grabAnswer("What is your name?");
 		myBot = new Chatbot(userName);
-		baseFrame = new ChatFrame(this);
 	}
 	
 	public void start()
@@ -73,18 +70,4 @@ public class ChatController
 	{
 		return baseFrame;
 	}
-<<<<<<< HEAD
-	
-	public Chatbot getChatbot()
-	{
-		return myBot;
-	}
-	
-	public ChatView getChatView()
-	{
-		return myDisplay;
-	}
-}
-=======
 }	
->>>>>>> try_adding_an_icon
