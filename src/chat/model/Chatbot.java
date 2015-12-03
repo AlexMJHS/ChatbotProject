@@ -51,11 +51,11 @@ public class Chatbot
 	
 	private void buildPoliticalTopicsList()
 	{
-		this.politicalTopicList.add("Democrat");
-		this.politicalTopicList.add("Republican");
-		this.politicalTopicList.add("Liberal");
-		this.politicalTopicList.add("Election");
-		this.politicalTopicList.add("Conservative");
+		this.politicalTopicList.add("democrat");
+		this.politicalTopicList.add("republican");
+		this.politicalTopicList.add("liberal");
+		this.politicalTopicList.add("election");
+		this.politicalTopicList.add("conservative");
 		this.politicalTopicList.add("Trump");
 		this.politicalTopicList.add("Clinton");
 		this.politicalTopicList.add("Biden");
@@ -63,7 +63,7 @@ public class Chatbot
 		this.politicalTopicList.add("Rubio");
 		this.politicalTopicList.add("Fiorina");
 		this.politicalTopicList.add("Sanders");
-		this.politicalTopicList.add("Vote");
+		this.politicalTopicList.add("vote");
 		this.politicalTopicList.add("11/4/16");	
 	}
 	
@@ -204,14 +204,14 @@ public class Chatbot
 			case 1:
 				if(politicalTopicChecker(currentInput))
 				{
-					nextConversation = "That's so cool";
+					nextConversation = "Politics are cool! What else?";
 				}
 				break;
 			case 2:
 			{
-				if(contentChecker(currentInput))
+				if(keyboardMashChecker(currentInput))
 				{
-					nextConversation = "Wow, interesting";
+					nextConversation = "What are you trying to say?";
 				}
 				
 			}
@@ -276,7 +276,7 @@ public class Chatbot
 	 */
 	public ArrayList<String> getPoliticalTopicList()
 	{
-		return null;
+		return politicalTopicList;
 	}
 	
 	/**
@@ -285,6 +285,6 @@ public class Chatbot
 	 */
 	public void setContent(String content)
 	{
-		
+		this.content = content;
 	}
 }
