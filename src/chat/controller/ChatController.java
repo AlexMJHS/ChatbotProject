@@ -20,6 +20,7 @@ public class ChatController
 		myDisplay = new ChatView();
 		String userName = myDisplay.grabAnswer("What is your name?");
 		myBot = new Chatbot(userName);
+		baseFrame = new ChatFrame(this);
 	}
 	
 	public void start()
@@ -30,13 +31,13 @@ public class ChatController
 	
 	private void chat()
 	{
-		String conversation = myDisplay.grabAnswer("What would you like to talk about today?");
-		while(myBot.lengthChecker(conversation))
-		{
-			conversation = myBot.processConversation(conversation);
-			conversation = myDisplay.grabAnswer(myBot.processConversation(conversation));
+//		String conversation = myDisplay.grabAnswer("What would you like to talk about today?");
+//		while(myBot.lengthChecker(conversation))
+//		{
+//			conversation = myBot.processConversation(conversation);
+//			conversation = myDisplay.grabAnswer(myBot.processConversation(conversation));
 			
-		}
+//		}
 	}
 	
 	public String userToChatbot(String conversation)
@@ -54,7 +55,7 @@ public class ChatController
 	
 	private void shutDown()
 	{
-		myDisplay.showResponse("Goodbye" + myBot.getUserName() + "it has been a pleasure talking with you.");
+		myDisplay.showResponse("Goodbye " + myBot.getUserName() + " it has been a pleasure talking with you.");
 		System.exit(0);
 	}
 	

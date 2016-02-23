@@ -24,7 +24,8 @@ public class ChatPanel extends JPanel
 		firstTextArea = new JTextArea(10,30);
 		firstTextField = new JTextField(30);
 		promptLabel = new JLabel("Chat with me");
-		firstButton = new JButton("asda");
+		colorButton = new JButton("Change Colors");
+		firstButton = new JButton("Submit");
 		
 		setupPanel();
 		setupLayout();
@@ -34,12 +35,11 @@ public class ChatPanel extends JPanel
 	private void setupPanel()
 	{
 		this.setLayout(baseLayout);
-		this.setBackground(Color.CYAN);
+		this.setBackground(Color.GRAY);
 		this.add(firstButton);
 		this.add(colorButton);
 		this.add(firstTextArea);
 		this.add(firstTextField);
-		this.add(firstButton);
 		this.add(promptLabel);
 		firstTextField.setToolTipText("Type here for the chatbot");
 		firstTextArea.setEnabled(false);
@@ -47,6 +47,28 @@ public class ChatPanel extends JPanel
 	
 	private void setupLayout()
 	{
+		baseLayout.putConstraint(SpringLayout.WEST, firstTextField, 35, SpringLayout.WEST, this);
+		baseLayout.putConstraint(SpringLayout.SOUTH, firstTextField, -236, SpringLayout.SOUTH, this);
+		baseLayout.putConstraint(SpringLayout.EAST, firstTextField, -30, SpringLayout.EAST, this);
+		baseLayout.putConstraint(SpringLayout.NORTH, firstTextArea, 6, SpringLayout.SOUTH, firstTextField);
+		baseLayout.putConstraint(SpringLayout.WEST, firstTextArea, 69, SpringLayout.WEST, this);
+		baseLayout.putConstraint(SpringLayout.SOUTH, firstTextArea, -95, SpringLayout.SOUTH, this);
+		baseLayout.putConstraint(SpringLayout.EAST, firstTextArea, -67, SpringLayout.EAST, this);
+		baseLayout.putConstraint(SpringLayout.NORTH, firstButton, 0, SpringLayout.NORTH, colorButton);
+		baseLayout.putConstraint(SpringLayout.WEST, firstButton, 63, SpringLayout.WEST, this);
+		baseLayout.putConstraint(SpringLayout.NORTH, colorButton, 18, SpringLayout.SOUTH, firstTextArea);
+		baseLayout.putConstraint(SpringLayout.EAST, colorButton, 0, SpringLayout.EAST, firstTextArea);
+		baseLayout.putConstraint(SpringLayout.WEST, promptLabel, 179, SpringLayout.WEST, this);
+		baseLayout.putConstraint(SpringLayout.SOUTH, promptLabel, -6, SpringLayout.NORTH, firstTextField);
+		
+	}
+	
+	private void changeColor()
+	{
+		int red = (int) (Math.random() * 256);
+		int green = (int) (Math.random() * 256);
+		int blue = (int) (Math.random() * 256);
+		setBackground(new Color(red, green, blue));
 		
 	}
 	
@@ -61,6 +83,14 @@ public class ChatPanel extends JPanel
 				firstTextField.setText("");
 				String response = baseController.userToChatbot(userText); //send the text to chatbot, chatbot will process
 				firstTextArea.append("/nChatbot: " + response); //display the response
+			}
+		});
+		
+		colorButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				changeColor();
 			}
 		});
 	}
