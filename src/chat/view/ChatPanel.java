@@ -1,65 +1,106 @@
 package chat.view;
 
 import javax.swing.*;
-import javax.swing.SpringLayout;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+
 import chat.controller.ChatController;
 
+/**
+ * ChatPanel for the Chatbot project.
+ * @author Alejandro Magallanes
+ * @version 2.1 Feb. 23, 2016
+ */
 public class ChatPanel extends JPanel
 {
 	private ChatController baseController;
 	private SpringLayout baseLayout;
+	private SpringLayout baseLayout_1;
 	private JButton firstButton;
 	private JButton colorButton;
 	private JTextField firstTextField;
+	private JTextField firstTextField_1;
 	private JTextArea firstTextArea;
 	private JLabel promptLabel;
+	private JScrollPane textPane;
+	private JButton tweetButton;
+	private JButton saveButton;
+	private JButton loadButton;
 	
 	public ChatPanel(ChatController baseController)
 	{
-		this.baseController = baseController;
 		baseLayout = new SpringLayout();
+		firstTextArea = new JTextArea(10,25);
+		firstTextField = new JTextField(25);
+		loadButton = new JButton("Chat");
+		
+		
+		this.baseController = baseController;
+		baseLayout_1 = new SpringLayout();
+		baseLayout_1.putConstraint(SpringLayout.WEST, loadButton, 26, SpringLayout.WEST, this);
+		baseLayout_1.putConstraint(SpringLayout.EAST, loadButton, -351, SpringLayout.EAST, this);
 		firstTextArea = new JTextArea(10,30);
-		firstTextField = new JTextField(30);
+		firstTextField_1 = new JTextField(30);
+		baseLayout_1.putConstraint(SpringLayout.WEST, firstTextField_1, 0, SpringLayout.EAST, loadButton);
+		baseLayout_1.putConstraint(SpringLayout.EAST, firstTextField_1, -35, SpringLayout.EAST, this);
 		promptLabel = new JLabel("Chat with me");
 		colorButton = new JButton("Change Colors");
 		firstButton = new JButton("Submit");
 		
+		setupChatPane();
 		setupPanel();
 		setupLayout();
 		setupListeners();
 	}
 	
+	private void setupChatPane()
+	{
+		textPane = new JScrollPane(firstTextArea);
+		baseLayout_1.putConstraint(SpringLayout.NORTH, firstTextField_1, 14, SpringLayout.SOUTH, textPane);
+		baseLayout_1.putConstraint(SpringLayout.NORTH, loadButton, 15, SpringLayout.SOUTH, textPane);
+		baseLayout_1.putConstraint(SpringLayout.NORTH, textPane, 25, SpringLayout.NORTH, this);
+		baseLayout_1.putConstraint(SpringLayout.WEST, textPane, 20, SpringLayout.WEST, this);
+		baseLayout_1.putConstraint(SpringLayout.SOUTH, textPane, 175, SpringLayout.NORTH, this);
+		baseLayout_1.putConstraint(SpringLayout.EAST, textPane, -20, SpringLayout.EAST, this);
+		firstTextArea.setLineWrap(true);
+		firstTextArea.setWrapStyleWord(true);
+		firstTextArea.setEditable(false);
+		textPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		textPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+	}
+	
 	private void setupPanel()
 	{
-		this.setLayout(baseLayout);
-		this.setBackground(Color.GRAY);
-		this.add(firstButton);
-		this.add(colorButton);
-		this.add(firstTextArea);
-		this.add(firstTextField);
-		this.add(promptLabel);
-		firstTextField.setToolTipText("Type here for the chatbot");
-		firstTextArea.setEnabled(false);
+		this.setLayout(baseLayout_1);
+		this.add(loadButton);
+		this.add(textPane);
+		//DO NOT HAVE the line this.add(chatArea);
+		this.add(firstTextField_1);
+//		this.setLayout(baseLayout);
+//		this.setBackground(Color.GRAY);
+//		this.add(firstButton);
+//		this.add(colorButton);
+//		this.add(firstTextArea);
+//		this.add(firstTextField);
+//		this.add(promptLabel);
+//		firstTextField.setToolTipText("Type here for the chatbot");
+//		firstTextArea.setEnabled(false);
 	}
 	
 	private void setupLayout()
 	{
-		baseLayout.putConstraint(SpringLayout.WEST, firstTextField, 35, SpringLayout.WEST, this);
-		baseLayout.putConstraint(SpringLayout.SOUTH, firstTextField, -236, SpringLayout.SOUTH, this);
-		baseLayout.putConstraint(SpringLayout.EAST, firstTextField, -30, SpringLayout.EAST, this);
-		baseLayout.putConstraint(SpringLayout.NORTH, firstTextArea, 6, SpringLayout.SOUTH, firstTextField);
-		baseLayout.putConstraint(SpringLayout.WEST, firstTextArea, 69, SpringLayout.WEST, this);
-		baseLayout.putConstraint(SpringLayout.SOUTH, firstTextArea, -95, SpringLayout.SOUTH, this);
-		baseLayout.putConstraint(SpringLayout.EAST, firstTextArea, -67, SpringLayout.EAST, this);
-		baseLayout.putConstraint(SpringLayout.NORTH, firstButton, 0, SpringLayout.NORTH, colorButton);
-		baseLayout.putConstraint(SpringLayout.WEST, firstButton, 63, SpringLayout.WEST, this);
-		baseLayout.putConstraint(SpringLayout.NORTH, colorButton, 18, SpringLayout.SOUTH, firstTextArea);
-		baseLayout.putConstraint(SpringLayout.EAST, colorButton, 0, SpringLayout.EAST, firstTextArea);
-		baseLayout.putConstraint(SpringLayout.WEST, promptLabel, 179, SpringLayout.WEST, this);
-		baseLayout.putConstraint(SpringLayout.SOUTH, promptLabel, -6, SpringLayout.NORTH, firstTextField);
+		baseLayout_1.putConstraint(SpringLayout.NORTH, firstTextArea, 6, SpringLayout.SOUTH, firstTextField_1);
+		baseLayout_1.putConstraint(SpringLayout.WEST, firstTextArea, 69, SpringLayout.WEST, this);
+		baseLayout_1.putConstraint(SpringLayout.SOUTH, firstTextArea, -95, SpringLayout.SOUTH, this);
+		baseLayout_1.putConstraint(SpringLayout.EAST, firstTextArea, -67, SpringLayout.EAST, this);
+		baseLayout_1.putConstraint(SpringLayout.NORTH, firstButton, 0, SpringLayout.NORTH, colorButton);
+		baseLayout_1.putConstraint(SpringLayout.WEST, firstButton, 63, SpringLayout.WEST, this);
+		baseLayout_1.putConstraint(SpringLayout.NORTH, colorButton, 18, SpringLayout.SOUTH, firstTextArea);
+		baseLayout_1.putConstraint(SpringLayout.EAST, colorButton, 0, SpringLayout.EAST, firstTextArea);
+		baseLayout_1.putConstraint(SpringLayout.WEST, promptLabel, 179, SpringLayout.WEST, this);
+		baseLayout_1.putConstraint(SpringLayout.SOUTH, promptLabel, -6, SpringLayout.NORTH, firstTextField_1);
 		
 	}
 	
@@ -97,6 +138,6 @@ public class ChatPanel extends JPanel
 	
 	public JTextField getTextField()
 	{
-		return firstTextField;
+		return firstTextField_1;
 	}
 }
