@@ -46,6 +46,33 @@ public class CTECTwitter
 	}
 	
 	/**
+	 * Loads 2000 tweets from the supplied Twitter user to a List<Status> and a
+	 * Llist<String>
+	 * @param twitterHandle
+	 * @throws TwitterException
+	 */
+	public void loadTweets(String twitterHandle) throws TwitterException
+	{
+		Paging statusPage = new Paging(1, 200);
+		int page = 1;
+		while (page <= 10)
+		{
+			statusPage.setPage(page);
+			statusList.addAll(chatbotTwitter.getUserTimeline(twitterHandle, statusPage));
+		}
+		for (Status currentStatus : statusList)
+		{
+			String[] tweetText = currentStatus.getText().split("");
+			for (String word : tweetText)
+			{
+				tweetTexts.add(removePunctuation(word).toLowerCase());
+			}
+		}
+		removeCommonEnglishWords(tweetTexts);
+		removeEmptyText();
+	}
+	
+	/**
 	 * Create the statistics about the tweets
 	 * @param wordList The supplied list of words
 	 * @return A String containing the name the user,

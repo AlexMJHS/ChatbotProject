@@ -92,6 +92,6 @@ public class ChatController
 	
 	public void handleErrors(String errorMessage)
 	{
-		display.DisplayText(errorMessage);
+		myDisplay.showResponse(errorMessage);
 	}
 }	
