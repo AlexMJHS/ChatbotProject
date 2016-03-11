@@ -8,7 +8,7 @@ import chat.controller.ChatController;
 /**
  * 
  * @author Alejandro Magallanes
- * @version 0.3 Added a method that can send a tweet
+ * @version 0.4 Changed the sendTweet method to handle errors
  * Will interact with Twitter
  *
  */
@@ -37,7 +37,7 @@ public class CTECTwitter
 	{
 		try
 		{
-		chatbotTwitter.updateStatus("");
+		chatbotTwitter.updateStatus("I just tweeted from my Java Chatbot program! #APCSRocks @CTECNow Thanks @cscheerleader & @codyhenrichsen!");
 		}
 		catch(TwitterException error)
 		{
@@ -51,8 +51,8 @@ public class CTECTwitter
 	 * @return A String containing the name the user,
 	 * their most common word in their tweets, and how often it is in their tweets.
 	 */
-	public String topResults(ArrayList<String> wordList)
-	{
-		
-	}
+//	public String topResults(ArrayList<String> wordList)
+//	{
+//		
+//	}
 }

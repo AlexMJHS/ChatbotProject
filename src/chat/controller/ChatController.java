@@ -83,6 +83,13 @@ public class ChatController
 		return baseFrame;
 	}
 	
+	public String analyze(String userName)
+	{
+		String userAnalysis = "The twitter user " + userName + " has ...";
+		
+		return userAnalysis;
+	}
+	
 	public void handleErrors(String errorMessage)
 	{
 		display.DisplayText(errorMessage);

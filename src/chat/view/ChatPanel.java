@@ -26,6 +26,8 @@ public class ChatPanel extends JPanel
 	private JLabel promptLabel;
 	private JScrollPane textPane;
 	private JButton tweetButton;
+	private JButton analyzeTwitterButton;
+	private JButton analyzeTwitterButton_1;
 	private JButton saveButton;
 	private JButton loadButton;
 	
@@ -35,19 +37,18 @@ public class ChatPanel extends JPanel
 		firstTextArea = new JTextArea(10,25);
 		firstTextField = new JTextField(25);
 		loadButton = new JButton("Chat");
+		analyzeTwitterButton = new JButton("Analyze som tweets");
 		
 		
 		this.baseController = baseController;
 		baseLayout_1 = new SpringLayout();
-		baseLayout_1.putConstraint(SpringLayout.WEST, loadButton, 26, SpringLayout.WEST, this);
-		baseLayout_1.putConstraint(SpringLayout.EAST, loadButton, -351, SpringLayout.EAST, this);
 		firstTextArea = new JTextArea(10,30);
 		firstTextField_1 = new JTextField(30);
-		baseLayout_1.putConstraint(SpringLayout.WEST, firstTextField_1, 0, SpringLayout.EAST, loadButton);
-		baseLayout_1.putConstraint(SpringLayout.EAST, firstTextField_1, -35, SpringLayout.EAST, this);
 		promptLabel = new JLabel("Chat with me");
 		colorButton = new JButton("Change Colors");
 		firstButton = new JButton("Submit");
+		tweetButton = new JButton("Send Tweet!");
+		analyzeTwitterButton_1 = new JButton("Analyze some tweets");
 		
 		setupChatPane();
 		setupPanel();
@@ -58,12 +59,6 @@ public class ChatPanel extends JPanel
 	private void setupChatPane()
 	{
 		textPane = new JScrollPane(firstTextArea);
-		baseLayout_1.putConstraint(SpringLayout.NORTH, firstTextField_1, 14, SpringLayout.SOUTH, textPane);
-		baseLayout_1.putConstraint(SpringLayout.NORTH, loadButton, 15, SpringLayout.SOUTH, textPane);
-		baseLayout_1.putConstraint(SpringLayout.NORTH, textPane, 25, SpringLayout.NORTH, this);
-		baseLayout_1.putConstraint(SpringLayout.WEST, textPane, 20, SpringLayout.WEST, this);
-		baseLayout_1.putConstraint(SpringLayout.SOUTH, textPane, 175, SpringLayout.NORTH, this);
-		baseLayout_1.putConstraint(SpringLayout.EAST, textPane, -20, SpringLayout.EAST, this);
 		firstTextArea.setLineWrap(true);
 		firstTextArea.setWrapStyleWord(true);
 		firstTextArea.setEditable(false);
@@ -75,7 +70,9 @@ public class ChatPanel extends JPanel
 	{
 		this.setLayout(baseLayout_1);
 		this.add(loadButton);
+		this.add(tweetButton);
 		this.add(textPane);
+		this.add(analyzeTwitterButton_1);
 		//DO NOT HAVE the line this.add(chatArea);
 		this.add(firstTextField_1);
 //		this.setLayout(baseLayout);
@@ -101,7 +98,20 @@ public class ChatPanel extends JPanel
 		baseLayout_1.putConstraint(SpringLayout.EAST, colorButton, 0, SpringLayout.EAST, firstTextArea);
 		baseLayout_1.putConstraint(SpringLayout.WEST, promptLabel, 179, SpringLayout.WEST, this);
 		baseLayout_1.putConstraint(SpringLayout.SOUTH, promptLabel, -6, SpringLayout.NORTH, firstTextField_1);
-		
+		baseLayout_1.putConstraint(SpringLayout.NORTH, analyzeTwitterButton_1, 0, SpringLayout.NORTH, tweetButton);
+		baseLayout_1.putConstraint(SpringLayout.WEST, analyzeTwitterButton_1, 6, SpringLayout.EAST, tweetButton);
+		baseLayout_1.putConstraint(SpringLayout.NORTH, tweetButton, 8, SpringLayout.SOUTH, loadButton);
+		baseLayout_1.putConstraint(SpringLayout.WEST, tweetButton, 0, SpringLayout.WEST, loadButton);
+		baseLayout_1.putConstraint(SpringLayout.NORTH, firstTextField_1, 14, SpringLayout.SOUTH, textPane);
+		baseLayout_1.putConstraint(SpringLayout.NORTH, loadButton, 15, SpringLayout.SOUTH, textPane);
+		baseLayout_1.putConstraint(SpringLayout.NORTH, textPane, 25, SpringLayout.NORTH, this);
+		baseLayout_1.putConstraint(SpringLayout.WEST, textPane, 20, SpringLayout.WEST, this);
+		baseLayout_1.putConstraint(SpringLayout.SOUTH, textPane, 175, SpringLayout.NORTH, this);
+		baseLayout_1.putConstraint(SpringLayout.EAST, textPane, -20, SpringLayout.EAST, this);
+		baseLayout_1.putConstraint(SpringLayout.WEST, firstTextField_1, 0, SpringLayout.EAST, loadButton);
+		baseLayout_1.putConstraint(SpringLayout.EAST, firstTextField_1, -35, SpringLayout.EAST, this);
+		baseLayout_1.putConstraint(SpringLayout.WEST, loadButton, 26, SpringLayout.WEST, this);
+		baseLayout_1.putConstraint(SpringLayout.EAST, loadButton, -351, SpringLayout.EAST, this);
 	}
 	
 	private void changeColor()
@@ -132,6 +142,16 @@ public class ChatPanel extends JPanel
 			public void actionPerformed(ActionEvent click)
 			{
 				baseController.sendTweet("no text to send");
+			}
+		});
+		
+		analyzeTwitterButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				String user = firstTextField.getText();
+				String results = baseController.analyze(user);
+				firstTextArea.setText(results);
 			}
 		});
 		
