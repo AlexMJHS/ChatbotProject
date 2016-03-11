@@ -72,6 +72,21 @@ public class CTECTwitter
 		removeEmptyText();
 	}
 	
+	private String removePunctuation(String currentString)
+	{
+		return null;
+	}
+	
+	private void removeEmptyText()
+	{
+		
+	}
+	
+	private ArrayList removeCommonEnglishWords(ArrayList<String> wordList)
+	{
+		return null;
+	}
+	
 	/**
 	 * Create the statistics about the tweets
 	 * @param wordList The supplied list of words
