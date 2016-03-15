@@ -1,8 +1,12 @@
 package chat.model;
 
 import java.util.ArrayList;
+import java.util.Scanner;
+
 import twitter4j.*;
+
 import java.io.*;
+
 import chat.controller.ChatController;
 
 /**
@@ -92,16 +96,81 @@ public class CTECTwitter
 		return scrubbedString;
 	}
 	
+	/**
+	 * Removes empty text entries from the tweetTexts list.
+	 */
 	private void removeEmptyText()
 	{
+		for (int spot = 0; spot < tweetTexts.size(); spot++)
+		{
+			if(tweetTexts.get(spot).equals(""))
+			{
+				tweetTexts.remove(spot);
+				spot--; //When you remove you have to have -- or you will skip over
+			}
+		}
+	}
+	
+	/**
+	 * Removes all words found in commonWords.txt from the parameter wordList.
+	 * @param wordList
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	private ArrayList removeCommonEnglishWords(ArrayList<String> wordList)
+	{
+		String[] boringWords = importWordsToArray();
+		
+		for (int count = 0; count < wordList.size(); count++)
+		{
+			for (int removeSpot = 0; removeSpot < boringWords.length; removeSpot++)
+			{
+				if (wordList.get(count).equalsIgnoreCase(boringWords[removeSpot]))
+				{
+					wordList.remove(count);
+					count--;
+					removeSpot = boringWords.length; // Exit the inner loop
+				}
+			}
+		}
+		
+		//Comment this if you want to keep Twitter usernames in your word list.
+		removeTwitterUsernamesFromList(wordList);
+		
+		return wordList;
 		
 	}
 	
-	private ArrayList removeCommonEnglishWords(ArrayList<String> wordList)
-	{
-		return null;
-	}
 	
+	private String[] importWordsToArray()
+	{
+		String[] boringWords;
+		int wordCount = 0;
+		try
+		{
+			Scanner wordFile = new Scanner(new File("commonWords.txt"));
+			while (wordFile.hasNext())
+			{
+				wordCount++;
+				wordFile.next();
+				
+			}
+			wordFile.reset();
+			boringWords = new String[wordCount];
+			int boringWordCount = 0;
+			while (wordFile.hasNext())
+			{
+				boringWords[boringWordCount] = wordFile.next();
+				boringWordCount++;
+			}
+			wordFile.close();
+		}
+		catch (FileNotFoundException e)
+		{
+			return new String[0];
+		}
+		return boringWords;
+	}
 	
 	/**
 	 * Create the statistics about the tweets
