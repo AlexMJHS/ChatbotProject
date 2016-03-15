@@ -16,7 +16,7 @@ public class CTECTwitter
 {
 	//Declaration
 	private ArrayList<Status> statusList;
-	private ArrayList<String> wordList;
+	private ArrayList<String> tweetTexts;
 	private Twitter chatbotTwitter;
 	private ChatController baseController;
 	
@@ -24,7 +24,7 @@ public class CTECTwitter
 	{
 		this.baseController = baseController;
 		statusList = new ArrayList<Status>();
-		wordList = new ArrayList<String>();
+		tweetTexts = new ArrayList<String>();
 		chatbotTwitter = TwitterFactory.getSingleton();
 	}
 	
@@ -72,9 +72,24 @@ public class CTECTwitter
 		removeEmptyText();
 	}
 	
+	/**
+	 * Removes defined punctuation marks and symbols from the supplied string.
+	 * @param currentString
+	 * @return
+	 */
 	private String removePunctuation(String currentString)
 	{
-		return null;
+		String punctuation = ".,'?!;:\"(){}^[]<>-"; 
+		
+		String scrubbedString = "";
+		for (int i = 0; i < currentString.length(); i++)
+		{
+			if (punctuation.indexOf(currentString.charAt(i)) == -1)
+			{
+				scrubbedString += currentString.charAt(i);
+			}
+		}
+		return scrubbedString;
 	}
 	
 	private void removeEmptyText()
@@ -86,6 +101,7 @@ public class CTECTwitter
 	{
 		return null;
 	}
+	
 	
 	/**
 	 * Create the statistics about the tweets
