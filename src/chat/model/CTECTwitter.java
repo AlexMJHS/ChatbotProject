@@ -1,6 +1,7 @@
 package chat.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import twitter4j.*;
@@ -139,6 +140,51 @@ public class CTECTwitter
 		
 		return wordList;
 		
+	}
+	
+	public String topResults()
+	{
+		String tweetResults = "";
+		
+		int topWordLocation = 0;
+		int topCount = 0;
+		
+		for (int index = 0; index < tweetTexts.size(); index++)
+		{
+			int wordUseCount = 1;
+			
+			for(int spot = index + 1; spot < tweetTexts.size(); spot++)
+			{
+				if(tweetTexts.get(index).equals(tweetTexts.get(spot)))
+				{
+					wordUseCount++;
+				}
+				if(wordUseCount > topCount)
+				{
+					topCount = wordUseCount;
+					topWordLocation = index;
+				}
+			}
+		}
+		
+		tweetResults = "The top word in the tweets was " + tweetTexts.get(topWordLocation) + " and it was used " + topCount + " times!";
+		return tweetResults;
+	}
+	
+	/**
+	 * Removes 
+	 * @param wordList
+	 */
+	private void removeTwitterUsernamesFromList(List<String> wordList)
+	{
+		for(int wordCount = 0; wordCount < wordList.size(); wordCount++)
+		{
+			if (wordList.get(wordCount).length() >= 1 && wordList.get(wordCount).charAt(0) == '@')
+			{
+				wordList.remove(wordCount);
+				wordCount--;
+			}
+		}
 	}
 	
 	
