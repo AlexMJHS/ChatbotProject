@@ -4,6 +4,7 @@ import chat.view.ChatView;
 import chat.model.CTECTwitter;
 import chat.model.Chatbot;
 import chat.view.ChatFrame;
+import twitter4j.*;
 
 /**
  * 
@@ -68,6 +69,22 @@ public class ChatController
 		chatTwitter.sendTweet(tweetText);
 	}
 	
+	public String analyze(String userName)
+	{
+		String userAnalysis = "The Twitter user " + userName + " has many tweets. ";
+		try
+		{
+			chatTwitter.loadTweets(userName);
+		}
+		catch (TwitterException error)
+		{
+			handleErrors(error.getErrorMessage());
+		}
+		userAnalysis += chatTwitter.topResults();
+		
+		return userAnalysis;
+	}
+	
 	public Chatbot getChatbot()
 	{
 		return myBot;
@@ -81,13 +98,6 @@ public class ChatController
 	public ChatFrame getBaseFrame()
 	{
 		return baseFrame;
-	}
-	
-	public String analyze(String userName)
-	{
-		String userAnalysis = "The twitter user " + userName + " has many tweets " + chatTwitter.topResults();
-		
-		return userAnalysis;
 	}
 	
 	public void handleErrors(String errorMessage)

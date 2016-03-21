@@ -3,11 +3,8 @@ package chat.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 import twitter4j.*;
-
 import java.io.*;
-
 import chat.controller.ChatController;
 
 /**
@@ -49,6 +46,7 @@ public class CTECTwitter
 			baseController.handleErrors(error.getErrorMessage());
 		}
 	}
+
 	
 	/**
 	 * Loads 2000 tweets from the supplied Twitter user to a List<Status> and a
@@ -58,6 +56,8 @@ public class CTECTwitter
 	 */
 	public void loadTweets(String twitterHandle) throws TwitterException
 	{
+		statusList.clear();
+		tweetTexts.clear();
 		Paging statusPage = new Paging(1, 200);
 		int page = 1;
 		while (page <= 10)
@@ -192,15 +192,15 @@ public class CTECTwitter
 	{
 		String[] boringWords;
 		int wordCount = 0;
-		try
-		{
-			Scanner wordFile = new Scanner(new File("commonWords.txt"));
-			while (wordFile.hasNext())
+		
+		Scanner wordFile = new Scanner(getClass().getResourceAsStream("commonWords.txt"));
+		while (wordFile.hasNext())
 			{
 				wordCount++;
 				wordFile.next();
 				
 			}
+			wordFile = new Scanner(getClass().getResourceAsStream("commonWords.txt"));
 			wordFile.reset();
 			boringWords = new String[wordCount];
 			int boringWordCount = 0;
@@ -217,6 +217,31 @@ public class CTECTwitter
 		}
 		return boringWords;
 	}
+
+public String sampleInvestigation()
+{
+	String results = "";
+	
+	Query query = new Query("marathon");
+	query.setCount(100);
+	query.setGeoCode(new GeoLocation(40.58721, -111.869178), 5, Query.MILES);
+	query.setSince("2016-1-1");
+	try
+	{
+		QueryResult result = chatbotTwitter.search(query);
+		results.concat("Count : " + result.getTweets().size());
+		for (Status tweet : result.getTweets())
+		{
+			results.concat("@" + tweet.getUser().getName() + ": " + tweet.getText() + "\n");
+		}
+	}
+	catch (TwitterException error)
+	{
+		error.printStackTrace();
+	}
+	
+	return results;
+}
 	
 	/**
 	 * Create the statistics about the tweets
