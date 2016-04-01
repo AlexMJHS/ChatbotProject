@@ -201,7 +201,6 @@ public class CTECTwitter
 				
 			}
 			wordFile = new Scanner(getClass().getResourceAsStream("commonWords.txt"));
-			wordFile.reset();
 			boringWords = new String[wordCount];
 			int boringWordCount = 0;
 			while (wordFile.hasNext())
@@ -210,29 +209,26 @@ public class CTECTwitter
 				boringWordCount++;
 			}
 			wordFile.close();
-		}
-		catch (FileNotFoundException e)
-		{
-			return new String[0];
-		}
-		return boringWords;
-	}
+			
+			return boringWords;
+			}
+	
 
 public String sampleInvestigation()
 {
 	String results = "";
 	
-	Query query = new Query("marathon");
+	Query query = new Query("5k run");
 	query.setCount(100);
 	query.setGeoCode(new GeoLocation(40.58721, -111.869178), 5, Query.MILES);
 	query.setSince("2016-1-1");
 	try
 	{
 		QueryResult result = chatbotTwitter.search(query);
-		results.concat("Count : " + result.getTweets().size());
+		results += "Count : " + result.getTweets().size();
 		for (Status tweet : result.getTweets())
 		{
-			results.concat("@" + tweet.getUser().getName() + ": " + tweet.getText() + "\n");
+			results += "@" + tweet.getUser().getName() + ": " + tweet.getText() + "\n";
 		}
 	}
 	catch (TwitterException error)

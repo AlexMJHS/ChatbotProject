@@ -69,6 +69,13 @@ public class ChatController
 		chatTwitter.sendTweet(tweetText);
 	}
 	
+	public String doInvestigation()
+	{
+		String twitterResults = "";
+		twitterResults += chatTwitter.sampleInvestigation();
+		return twitterResults;
+	}
+	
 	public String analyze(String userName)
 	{
 		String userAnalysis = "The Twitter user " + userName + " has many tweets. ";

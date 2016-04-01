@@ -1,12 +1,12 @@
 package chat.view;
 
 import javax.swing.*;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 
 import chat.controller.ChatController;
+import chat.controller.IOController;
 
 /**
  * ChatPanel for the Chatbot project.
@@ -26,6 +26,7 @@ public class ChatPanel extends JPanel
 	private JLabel promptLabel;
 	private JScrollPane textPane;
 	private JButton tweetButton;
+	private JButton tweetButton_1;
 	private JButton analyzeTwitterButton;
 	private JButton analyzeTwitterButton_1;
 	private JButton saveButton;
@@ -33,22 +34,30 @@ public class ChatPanel extends JPanel
 	
 	public ChatPanel(ChatController baseController)
 	{
+		this.baseController = baseController;
 		baseLayout = new SpringLayout();
-		firstTextArea = new JTextArea(10,25);
+		firstButton = new JButton("Enter");
+		tweetButton = new JButton("Tweet");
+		saveButton = new JButton ("Save");
+		loadButton = new JButton("Load");
+		analyzeTwitterButton = new JButton("Get Tweet");
+		colorButton = new JButton("Change Color");
 		firstTextField = new JTextField(25);
-		loadButton = new JButton("Chat");
-		analyzeTwitterButton = new JButton("Analyze som tweets");
-		
+		promptLabel = new JLabel("Chat with me!");
+		firstTextArea = new JTextArea(10,25);
 		
 		this.baseController = baseController;
 		baseLayout_1 = new SpringLayout();
+		baseLayout_1.putConstraint(SpringLayout.WEST, promptLabel, 177, SpringLayout.WEST, this);
+		baseLayout_1.putConstraint(SpringLayout.SOUTH, promptLabel, -10, SpringLayout.SOUTH, this);
+		baseLayout_1.putConstraint(SpringLayout.WEST, colorButton, 6, SpringLayout.EAST, saveButton);
 		firstTextArea = new JTextArea(10,30);
 		firstTextField_1 = new JTextField(30);
-		promptLabel = new JLabel("Chat with me");
-		colorButton = new JButton("Change Colors");
 		firstButton = new JButton("Submit");
-		tweetButton = new JButton("Send Tweet!");
-		analyzeTwitterButton_1 = new JButton("Analyze some tweets");
+		tweetButton_1 = new JButton("Send Tweet!");
+		baseLayout_1.putConstraint(SpringLayout.NORTH, colorButton, 0, SpringLayout.NORTH, tweetButton_1);
+		baseLayout_1.putConstraint(SpringLayout.NORTH, saveButton, 0, SpringLayout.NORTH, tweetButton_1);
+		baseLayout_1.putConstraint(SpringLayout.WEST, saveButton, 6, SpringLayout.EAST, tweetButton_1);
 		
 		setupChatPane();
 		setupPanel();
@@ -61,6 +70,7 @@ public class ChatPanel extends JPanel
 		textPane = new JScrollPane(firstTextArea);
 		firstTextArea.setLineWrap(true);
 		firstTextArea.setWrapStyleWord(true);
+		firstTextArea.setEnabled(false);
 		firstTextArea.setEditable(false);
 		textPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		textPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -70,9 +80,12 @@ public class ChatPanel extends JPanel
 	{
 		this.setLayout(baseLayout_1);
 		this.add(loadButton);
-		this.add(tweetButton);
+		this.add(tweetButton_1);
 		this.add(textPane);
 		this.add(analyzeTwitterButton_1);
+		this.add(saveButton);
+		this.add(colorButton);
+		this.add(promptLabel);
 		//DO NOT HAVE the line this.add(chatArea);
 		this.add(firstTextField_1);
 //		this.setLayout(baseLayout);
@@ -82,8 +95,8 @@ public class ChatPanel extends JPanel
 //		this.add(firstTextArea);
 //		this.add(firstTextField);
 //		this.add(promptLabel);
-//		firstTextField.setToolTipText("Type here for the chatbot");
-//		firstTextArea.setEnabled(false);
+		firstTextField.setToolTipText("Type here for the chatbot");
+     	firstTextArea.setEnabled(false);
 	}
 	
 	private void setupLayout()
@@ -94,14 +107,10 @@ public class ChatPanel extends JPanel
 		baseLayout_1.putConstraint(SpringLayout.EAST, firstTextArea, -67, SpringLayout.EAST, this);
 		baseLayout_1.putConstraint(SpringLayout.NORTH, firstButton, 0, SpringLayout.NORTH, colorButton);
 		baseLayout_1.putConstraint(SpringLayout.WEST, firstButton, 63, SpringLayout.WEST, this);
-		baseLayout_1.putConstraint(SpringLayout.NORTH, colorButton, 18, SpringLayout.SOUTH, firstTextArea);
-		baseLayout_1.putConstraint(SpringLayout.EAST, colorButton, 0, SpringLayout.EAST, firstTextArea);
-		baseLayout_1.putConstraint(SpringLayout.WEST, promptLabel, 179, SpringLayout.WEST, this);
-		baseLayout_1.putConstraint(SpringLayout.SOUTH, promptLabel, -6, SpringLayout.NORTH, firstTextField_1);
-		baseLayout_1.putConstraint(SpringLayout.NORTH, analyzeTwitterButton_1, 0, SpringLayout.NORTH, tweetButton);
-		baseLayout_1.putConstraint(SpringLayout.WEST, analyzeTwitterButton_1, 6, SpringLayout.EAST, tweetButton);
-		baseLayout_1.putConstraint(SpringLayout.NORTH, tweetButton, 8, SpringLayout.SOUTH, loadButton);
-		baseLayout_1.putConstraint(SpringLayout.WEST, tweetButton, 0, SpringLayout.WEST, loadButton);
+		baseLayout_1.putConstraint(SpringLayout.NORTH, analyzeTwitterButton_1, 0, SpringLayout.NORTH, tweetButton_1);
+		baseLayout_1.putConstraint(SpringLayout.WEST, analyzeTwitterButton_1, 6, SpringLayout.EAST, tweetButton_1);
+		baseLayout_1.putConstraint(SpringLayout.NORTH, tweetButton_1, 8, SpringLayout.SOUTH, loadButton);
+		baseLayout_1.putConstraint(SpringLayout.WEST, tweetButton_1, 0, SpringLayout.WEST, loadButton);
 		baseLayout_1.putConstraint(SpringLayout.NORTH, firstTextField_1, 14, SpringLayout.SOUTH, textPane);
 		baseLayout_1.putConstraint(SpringLayout.NORTH, loadButton, 15, SpringLayout.SOUTH, textPane);
 		baseLayout_1.putConstraint(SpringLayout.NORTH, textPane, 25, SpringLayout.NORTH, this);
@@ -137,7 +146,7 @@ public class ChatPanel extends JPanel
 			}
 		});
 		
-		tweetButton.addActionListener(new ActionListener()
+		tweetButton_1.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent click)
 			{
@@ -162,10 +171,30 @@ public class ChatPanel extends JPanel
 				changeColor();
 			}
 		});
-	}
+		
+		loadButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				String loadedText =IOController.readTextFromFile(promptLabel.getText());
+				firstTextArea.setText(loadedText);
+			}
+		});
+	
+	
+	saveButton.addActionListener(new ActionListener()
+	{
+		public void actionPerformed(ActionEvent click)
+		{
+			String file = IOController.saveFile(firstTextArea.getText());
+			promptLabel.setText(file);
+		}
+	});
+}
 	
 	public JTextField getTextField()
 	{
 		return firstTextField_1;
 	}
+	
 }
